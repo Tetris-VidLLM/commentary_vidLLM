@@ -54,7 +54,7 @@ if __name__ == "__main__":
   if MULTIPROCESS:
     processes = []
     for i, video_link in enumerate(VIDEO_LINKS):
-      process = multiprocessing.Process(target=video_to_data, args=(video_link, f"video_{i}", OUTFILE_PATH_PREFIX + f"video_{i}"))
+      process = multiprocessing.Process(target=video_to_data, args=(video_link, f"video_{i}", OUTFILE_PATH_PREFIX+"training/" + f"video_{i}.json"))
       processes.append(process)
       process.start()
     for process in processes:

@@ -35,7 +35,7 @@ def get_mp4(video_link: str, filename: str = SAVE_PATH + "video.mp4", resolution
     
     # Filters out all the files with "mp4" extension  
     mp4files = yt.streams.filter(progressive=True, file_extension='mp4')
-    to_download = mp4files.get_by_resolution(RESOLUTION)
+    to_download = mp4files.get_by_resolution(resolution)
     if to_download is None:
         to_download = mp4files.order_by('resolution')[0]
     try:
