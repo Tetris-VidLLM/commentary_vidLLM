@@ -49,6 +49,7 @@ if __name__ == "__main__":
   make_directory_if_not_exists(OUTFILE_PATH_PREFIX)
   make_directory_if_not_exists(OUTFILE_PATH_PREFIX+"videos/")
   make_directory_if_not_exists(OUTFILE_PATH_PREFIX+"clips/")
+  make_directory_if_not_exists(OUTFILE_PATH_PREFIX+"training/")
 
   if MULTIPROCESS:
     processes = []
@@ -60,4 +61,4 @@ if __name__ == "__main__":
       process.join()
   else:
     for i, video_link in enumerate(VIDEO_LINKS):
-      video_to_data(video_link, f"video_{i}", OUTFILE_PATH_PREFIX + f"video_{i}")
+      video_to_data(video_link, f"video_{i}", OUTFILE_PATH_PREFIX+"training/" + f"video_{i}.json")
