@@ -6,26 +6,36 @@ from moviepy.editor import VideoFileClip
 SAVE_PATH = "./videos/"  # to_do
 RESOLUTION = "360p"
 
-def split_video(input_file, clip_durations, output_prefix: str = SAVE_PATH + "clip"):
+def split_video(input_file, transcript_jsons, output_prefix: str = SAVE_PATH + "clip", min_clip_duration=0):
     video = VideoFileClip(input_file)
     total_duration = video.duration
-
-    current_time = 0
-    index = 1
+    clip_index = 0
+    transcript_idx = 0
     clip_file_paths = []
-    for clip_duration in clip_durations:
-        if current_time < total_duration:
-            end_time = min(current_time + clip_duration, total_duration)
-            clip = video.subclip(current_time, end_time)
-            clip_file = f"{output_prefix}_{index}.mp4"
+    clip_durations = []
+    clip_texts = []
+    while transcript_idx < len(transcript_jsons):
+        cur_clip_text = transcript_jsons[transcript_idx]['text']
+        cur_clip_start = transcript_jsons[transcript_idx]['start']
+        cur_clip_end =  transcript_jsons[transcript_idx]['start'] + transcript_jsons[transcript_idx]['duration']
+        while cur_clip_end - cur_clip_start < min_clip_duration and transcript_idx < len(transcript_jsons) - 1:
+            transcript_idx += 1
+            cur_clip_text += " " + transcript_jsons[transcript_idx]['text']
+            cur_clip_end = transcript_jsons[transcript_idx]['start'] + transcript_jsons[transcript_idx]['duration']
+        cur_clip_end = min(cur_clip_end, total_duration)
+        if cur_clip_end - cur_clip_start >= min_clip_duration:
+            clip = video.subclip(cur_clip_start, cur_clip_end)
+            clip_file = f"{output_prefix}_{clip_index}.mp4"
             clip_file_paths.append(clip_file)
+            clip_durations.append(clip.duration)
+            clip_texts.append(cur_clip_text)
             clip.write_videofile(clip_file)
             print(f"Created {clip_file}")
-            current_time = end_time
-            index += 1
+            clip_index += 1
+        transcript_idx += 1
 
     video.close()
-    return clip_file_paths
+    return clip_file_paths, clip_durations, clip_texts
 
 def get_mp4(video_link: str, filename: str = SAVE_PATH + "video.mp4", resolution: int = RESOLUTION):
     try:

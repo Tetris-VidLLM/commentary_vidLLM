@@ -23,7 +23,8 @@ VIDEO_LINKS = [
 ]
 
 OUTFILE_PATH_PREFIX = "./data/"
-MULTIPROCESS = True
+MULTIPROCESS = False
+MIN_CLIP_DURATION = 30
 
 def video_to_data(video_link: str, data_file_prefix: str, data_outfile: str):
   transcript = get_transcript(video_link)
@@ -32,15 +33,10 @@ def video_to_data(video_link: str, data_file_prefix: str, data_outfile: str):
   video_mp4 = get_mp4(video_link, OUTFILE_PATH_PREFIX + "videos/full_" + data_file_prefix)
   if video_mp4 is None:
     return
-  clip_durations = []
-  targets = []
   out_json = []
-  for snippet in transcript:
-    clip_durations.append(snippet['duration'])
-    targets.append(snippet['text'])
-  clip_filenames = split_video(video_mp4, clip_durations, OUTFILE_PATH_PREFIX + "clips/" + data_file_prefix)
+  clip_filenames, clip_durations, clip_texts = split_video(video_mp4, transcript, OUTFILE_PATH_PREFIX + "clips/" + data_file_prefix, MIN_CLIP_DURATION)
   for i in range(len(clip_filenames)):
-    out_json.append({"duration": clip_durations[i], "clip_filename": clip_filenames[i], "target_text": targets[i]})
+    out_json.append({"duration": clip_durations[i], "clip_filename": clip_filenames[i], "target_text": clip_texts[i]})
   with open(data_outfile, "w") as json_file:
     json.dump(out_json, json_file)
 

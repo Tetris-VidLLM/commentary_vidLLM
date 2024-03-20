@@ -14,4 +14,4 @@ def get_transcript(youtube_link: str):
 
 if __name__ == "__main__":
   srt = get_transcript("https://www.youtube.com/watch?v=fYyDQBG_tYc&list=PLA3elidp12Uu_aTr7X0cWnZ7bkB2YK_jQ&index=1")
-  print(srt)
+  print(srt[:10])
