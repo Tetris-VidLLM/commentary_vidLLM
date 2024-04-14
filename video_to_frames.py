@@ -1,7 +1,7 @@
 from moviepy.editor import VideoFileClip
 import numpy as np
 
-def video_to_frames(video_file: str, interval: int = 1) -> np.ndarray:
+def video_to_frames(video_file: str, interval: int = 1) -> [np.ndarray]:
   clip = VideoFileClip(video_file)
   frames = []
   duration = clip.duration
