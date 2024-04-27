@@ -48,5 +48,3 @@ def add_ttl_to_video(mp4file, text, outfile):
   tmp_mp3_filename = 'audio.mp3'
   text_to_mp3(text, tmp_mp3_filename)
   add_mp3_to_mp4(mp4file, tmp_mp3_filename, outfile)
-
-  
