@@ -1,2 +1,7 @@
-theme: jekyll-theme-minimal
-title: Tetris Commentary
+plugins:
+  - jekyll-relative-links
+relative_links:
+  enabled: true
+  collections: true
+include:
+  - index.md
