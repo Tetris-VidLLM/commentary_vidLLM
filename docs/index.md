@@ -40,14 +40,32 @@ converted to audio using a TTS (Text-to-Speech) model to generate
 audio commentary.
 
 ### 1.3 Major Objectives
+To achieve this goal we completed the following major objectives:
+* Create a Custom Tetris Commentary Dataset
+* Create a Video to Text Commentary Pipeline Using LLMs
+* Create a Text Commentary to Audio Pipeline
+* Create a Full Pipeline From Video to Commentary Incorporating or Video to Text Commentary and Text Commentary to Video Pipelines
 
+## 2 Relevant Prior Work
+As discussed previously there has been a large number of works in the field of Video based Large Language Models (Vid-LLMs). Tang et. al. 2024 survey paper gives a comprehensive overview of the field as a whole [[6]](#references). Our exploration into sports video interpretation builds upon existing research. Guatam et. al. (2022) summarized
+soccer games using video and audio [[4]](#references). Zellers et. al. developed Merlot, a system pretrained on millions of YouTube videos, achieving state of the art results on multiple question answer datasets [[11]](#references). Recent efforts have focused on Multimodal Large Language Models (MMLMs), capable of processing both text and video [[8]](#references). A range of datasets and benchmarks are accessible for Video-Language Learning Models (Vid-LLMs), catering to tasks like captioning, question answering, grounding, and retrieval. In selecting a Vid-LLM model, options include LLM-Based Video Agents, Vid-LLM Pretraining, Vid-LLM Instruction Tuning, and Hybrid
+methods. For our game commentary project, we opted for a Vid-LLM Pretraining model called VAST: A Vision-Audio-Subtitle-Text Omni-Modality Foundation Model and Dataset [[2]](#references).
 
-## Final Result
+## 3 Methodology
+
+### Tetris Dataset
+<img src="assets/766_Dataset.png" alt="Dataset" width="200"/>
+
+## 4 Results
+
+## 5 Final Result
 <video width="640" height="360" controls>
   <source src="assets/output_with_commentary.mp4" type="video/mp4">
 </video>
 
 ## [GitHub Page](https://github.com/Tetris-VidLLM/commentary_vidLLM)
+
+## [Final Project Presentation](https://docs.google.com/presentation/d/1HlOfV6bpR2wBAOudjraqju-dAw552oZy70-XxIv6_nA/edit?usp=sharing)
 
 ## References
 [1] 2023. What is Text-to-Speech? - Hugging Face — huggingface.co. https:
