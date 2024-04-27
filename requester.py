@@ -1,6 +1,11 @@
 import requests
 import json
 import pandas as pd
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 def send_request(message, conversation_history):
     url = 'https://api.openai.com/v1/chat/completions'
