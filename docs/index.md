@@ -53,8 +53,8 @@ methods. For our game commentary project, we opted for a Vid-LLM Pretraining mod
 
 ## 3 Methodology
 
-### Tetris Dataset
-<img src="assets/766_Dataset.png" alt="Dataset" width="200"/>
+### 3.1 Tetris Dataset
+<img src="assets/766_Dataset.png" alt="Dataset" width="640"/>
 
 ## 4 Results
 
