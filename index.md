@@ -1,8 +1,3 @@
----
-# Feel free to add content and custom Front Matter to this file.
-# To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
-
-layout: home
----
-
-Test
+# Install And Basic Run Instructions
+To get the required modules installed run pip install -r requirements.txt
+To run add your openAI API key to the .env file and then run main.py
