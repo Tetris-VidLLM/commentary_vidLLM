@@ -29,11 +29,11 @@ of commentary. Our group seeks to remedy this by developing a
 commentary system that will be able to take in video clips and
 produce commentary for the given sport/game.
 Over the past couple of years there have been major break-
-throughs in video and image interpretation tasks [[11]](#References)[[5]](#References). This field
+throughs in video and image interpretation tasks [[11]](#references)[[5]](#references). This field
 has expanded into a large set of tasks including recognition, cap-
-tioning, description, and question answering [[6]](#References). In a similar vein,
+tioning, description, and question answering [[6]](#references). In a similar vein,
 text to speech systems have been around for decades and there
-are publicly available tools that allow for easy use [[1]](#References). Our group
+are publicly available tools that allow for easy use [[1]](#references). Our group
 plans to train a Vid-LLM model to produce textual commentary
 for a video game using publicly available videos. This text will be
 converted to audio using a TTS (Text-to-Speech) model to generate
@@ -46,6 +46,8 @@ audio commentary.
 <video width="640" height="360" controls>
   <source src="assets/output_with_commentary.mp4" type="video/mp4">
 </video>
+
+## [GitHub Page](https://github.com/Tetris-VidLLM/commentary_vidLLM)
 
 ## References
 [1] 2023. What is Text-to-Speech? - Hugging Face — huggingface.co. https:
