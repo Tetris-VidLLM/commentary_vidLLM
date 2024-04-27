@@ -22,9 +22,9 @@ VIDEO_LINKS = [
   "https://www.youtube.com/watch?v=L_UPHsGR6fM&list=PLA3elidp12Uu_aTr7X0cWnZ7bkB2YK_jQ&index=13&pp=iAQB"
 ]
 
-OUTFILE_PATH_PREFIX = "./data/"
-MULTIPROCESS = False
-MIN_CLIP_DURATION = 30
+OUTFILE_PATH_PREFIX = "./data/0clip/"
+MULTIPROCESS = True
+MIN_CLIP_DURATION = 0
 
 def video_to_data(video_link: str, data_file_prefix: str, data_outfile: str):
   transcript = get_transcript(video_link)
