@@ -2,6 +2,10 @@
 
 ### Calvin Kranig, Unmesh Raskar, Gurudatta Patil, Ram Goutham Gunasekaran
 
+## [GitHub Page](https://github.com/Tetris-VidLLM/commentary_vidLLM)
+
+## [Final Project Presentation](https://docs.google.com/presentation/d/1HlOfV6bpR2wBAOudjraqju-dAw552oZy70-XxIv6_nA/edit?usp=sharing)
+
 ## 1 Introduction
 
 ### 1.1 Problem Statement
@@ -47,25 +51,127 @@ To achieve this goal we completed the following major objectives:
 * Create a Full Pipeline From Video to Commentary Incorporating or Video to Text Commentary and Text Commentary to Video Pipelines
 
 ## 2 Relevant Prior Work
-As discussed previously there has been a large number of works in the field of Video based Large Language Models (Vid-LLMs). Tang et. al. 2024 survey paper gives a comprehensive overview of the field as a whole [[6]](#references). Our exploration into sports video interpretation builds upon existing research. Guatam et. al. (2022) summarized
-soccer games using video and audio [[4]](#references). Zellers et. al. developed Merlot, a system pretrained on millions of YouTube videos, achieving state of the art results on multiple question answer datasets [[11]](#references). Recent efforts have focused on Multimodal Large Language Models (MMLMs), capable of processing both text and video [[8]](#references). A range of datasets and benchmarks are accessible for Video-Language Learning Models (Vid-LLMs), catering to tasks like captioning, question answering, grounding, and retrieval. In selecting a Vid-LLM model, options include LLM-Based Video Agents, Vid-LLM Pretraining, Vid-LLM Instruction Tuning, and Hybrid
-methods. For our game commentary project, we opted for a Vid-LLM Pretraining model called VAST: A Vision-Audio-Subtitle-Text Omni-Modality Foundation Model and Dataset [[2]](#references).
+As discussed previously there has been a large number of works in the field of Video based Large Language Models (Vid-LLMs). Tang et. al. 2024 survey paper gives a comprehensive overview of the field as a whole [[6]](#references). Our exploration into sports video interpretation builds upon existing research. Guatam et. al. (2022) summarized soccer games using video and audio [[4]](#references). Zellers et. al. developed Merlot, a system pretrained on millions of YouTube videos, achieving state of the art results on multiple question answer datasets [[11]](#references). Recent efforts have focused on Multimodal Large Language Models (MMLMs), capable of processing both text and video [[8]](#references). A range of datasets and benchmarks are accessible for Video-Language Learning Models (Vid-LLMs), catering to tasks like captioning, question answering, grounding, and retrieval. In selecting a Vid-LLM model, options include LLM-Based Video Agents, Vid-LLM Pretraining, Vid-LLM Instruction Tuning, and Hybrid methods. For our initial methodology we opted for a Vid-LLM Pretraining model called VAST: A Vision-Audio-Subtitle-Text Omni-Modality Foundation Model and Dataset [[2]](#references).
 
 ## 3 Methodology
 
 ### 3.1 Tetris Dataset
-<img src="assets/766_Dataset.png" alt="Dataset" width="640"/>
+<figure>
+  <img src="assets/766_Dataset.png" alt="Dataset" width="640"/>
+  <figcaption>Figure 1: Tetris Dataset</figcaption>
+</figure>
+
+
+Our group started by developing software for downloading Youtube videos along with their closed captions in order to create a custom Tetris commentary dataset. We ended up creating a full pipeline that takes in a list of video links and converts them into training data as detailed in this figure.
+
+Youtube returns a list of captions that all have different lengths, so we decided to concatenate adjacent closed captions to produce clips that are at least 30 seconds long.
+
+The dataset is being generated from a full playlist of the 2018 Classic Tetris World Championship. Out of the videos we are generating data for the first 11 that contain closed captions. This corresponds to roughly  524 minutes of video and just over 900 training samples.
+
+### 3.2 Video to Commentary Pipeline
+<figure>
+  <img src="assets/orig_com_system.png" alt="Dataset" width="640"/>
+  <figcaption>Figure 2: Original Commentary System</figcaption>
+</figure>
+
+Figure 2 our original complete commentary system. We take in clips from the dataset and run inference using a Vid-LLM. The textual output is then fed through a Text to Speech module that produces and mp3 that is then combined with the original clip to create a captioned clip.
+
+In our original system we were using VAST for the Vid-LLM and Google Text-to-Speech for the TTS Module.
+
+### 3.3 Updated Methodology
+<figure>
+  <img src="assets/new_com_system.png" alt="Dataset" width="640"/>
+  <figcaption>Figure 3: Final Commentary System</figcaption>
+</figure>
+
+Figure 3 shows our updated commentary system. It consists of 6 major steps:
+
+1. Extract frames from video clip
+2. Use block and text identifiers to extact critical information (See Figure 4)
+3. Create a tabular prompt for a LLM
+4. Generate textual commentary using LLM (In this case Chat GPT)
+5. Pass textual commentary to a Text to Speech Model (Google Text-to-Speech) to generate audio
+6. Combine the generated audio with the original clip to produce a commentated video
+
+<figure>
+  <img src="assets/new_approach.png" alt="Dataset" width="640"/>
+  <figcaption>Figure 4: New Approach Focusing on Important Information</figcaption>
+</figure>
+
+<div style="display: flex;align-items: center;">
+  <figure>
+  <img src="assets/block_det.png" alt="Dataset" width="640"/>
+  <figcaption>Figure 5: Block Detection Input and Output</figcaption>
+  </figure>
+  <figure>
+  <img src="assets/example_llm_input.png" alt="Dataset" width="640"/>
+  <figcaption>Figure 6: Example LLM Input</figcaption>
+  </figure>
+</div>
 
 ## 4 Results
 
-## 5 Final Result
-<video width="640" height="360" controls>
+### 4.1 Initial Results
+
+<div style="display: flex;align-items: center;">
+  <figure>
+  <img src="assets/vast_input.png" alt="Dataset" width="640"/>
+  <figcaption>Figure 7: Vast Input</figcaption>
+  </figure>
+  <figure>
+  <img src="assets/vast_res.png" alt="Dataset" width="640"/>
+  <figcaption>Figure 8: VAST Output</figcaption>
+  </figure>
+</div>
+
+After training VAST on our training dataset we were able to produce the output seen in Figure 8. VAST failed to detect the game being played and didn't give meaningful commentary. We tried additional Vid-LLM models and recieved similar results as seen in Figures 9 and 10. 
+
+<figure>
+  <img src="assets/video_llama_out.png" alt="Dataset" width="640"/>
+  <figcaption>Figure 9: Video-LLaMA output</figcaption>
+</figure>
+
+<figure>
+  <img src="assets/video_llava_out.png" alt="Dataset" width="640"/>
+  <figcaption>Figure 9: Video-LLaVA output</figcaption>
+</figure>
+
+In total we tried the following Vid-LLM models:
+* VAST
+* Video-LLaVA
+* Video-LLaMA
+* Vid2Seq 
+* CLIP-Captioner 
+* (ViT+BERT) 
+
+
+### 4.2 Explanations for Poor Initial Results
+We came up with the following possible explanations for these poor results:
+
+* Vid-LLMs are trained on a very different dataset (MSR-VTT, YouCook2)
+* Tetris is quite complex for the VidLLMs to understand visually
+* Instruction-prompting seemed insufficient
+* The commentary dataset doesn’t always talk about what’s happening in the game. It is normal human dialog
+
+
+
+### 4.3 Updated Methodology Results
+
+These poor initial results prompted our updated methodology which was able to produce the following video:
+
+<figure>
+  <video width="640" height="360" controls>
   <source src="assets/output_with_commentary.mp4" type="video/mp4">
-</video>
+  Your browser does not support the video tag.
+  </video>
+  <figcaption>Video 1: Final Result Example</figcaption>
+</figure>
 
-## [GitHub Page](https://github.com/Tetris-VidLLM/commentary_vidLLM)
+### 5 Conclusion
 
-## [Final Project Presentation](https://docs.google.com/presentation/d/1HlOfV6bpR2wBAOudjraqju-dAw552oZy70-XxIv6_nA/edit?usp=sharing)
+Through this project we reached the conclusion that naive implementation of Vid-LLMs for Tetris commentary is not feasible. Additional image processing is required for quality commentary. This falls in line with previous work [[4]](#references) which utilized additional metadata as input to a multimodal-LLM.
+
+Additionally the dataset we created was not optimal for training Vid-LLMs such as VAST due to the large ammount of extraneous commentary not directly related to the game being played. For future work, a more careful curation of the dataset may be able to produce better results.
 
 ## References
 [1] 2023. What is Text-to-Speech? - Hugging Face — huggingface.co. https:
@@ -90,20 +196,12 @@ Sandhini Agarwal, Girish Sastry, Amanda Askell, Pamela Mishkin, Jack Clark,
 Gretchen Krueger, and Ilya Sutskever. 2021. Learning Transferable Visual Models
 From Natural Language Supervision. (2021). arXiv:cs.CV/2103.00020
 
-[6] Yunlong Tang, Jing Bi, Siting Xu, Luchuan Song, Susan Liang, Teng Wang, Daoan
-Zhang, Jie An, Jingyang Lin, Rongyi Zhu, Ali Vosoughi, Chao Huang, Zeliang
-Zhang, Feng Zheng, Jianguo Zhang, Ping Luo, Jiebo Luo, and Chenliang Xu.
-2024. Video Understanding with Large Language Models: A Survey. (2024).
-arXiv:cs.CV/2312.17432
+[6] Yunlong Tang, Jing Bi, Siting Xu, Luchuan Song, Susan Liang, Teng Wang, Daoan Zhang, Jie An, Jingyang Lin, Rongyi Zhu, Ali Vosoughi, Chao Huang, Zeliang Zhang, Feng Zheng, Jianguo Zhang, Ping Luo, Jiebo Luo, and Chenliang Xu.2024. Video Understanding with Large Language Models: A Survey. (2024). arXiv:cs.CV/2312.17432
 
 [7] Classic Tetris. 2018. 2018 Classic Tetris World Championship. (Dec. 2018). https:
 //www.youtube.com/playlist?list=PLA3elidp12Uu_aTr7X0cWnZ7bkB2YK_jQ
 
-[8] Zhanyu Wang, Longyue Wang, Zhen Zhao, Minghao Wu, Chenyang Lyu,
-Huayang Li, Deng Cai, Luping Zhou, Shuming Shi, and Zhaopeng Tu.
-2023. GPT4Video: A Unified Multimodal Large Language Model for
-lnstruction-Followed Understanding and Safety-Aware Generation. (2023).
-arXiv:cs.CV/2311.16511
+[8] Zhanyu Wang, Longyue Wang, Zhen Zhao, Minghao Wu, Chenyang Lyu, Huayang Li, Deng Cai, Luping Zhou, Shuming Shi, and Zhaopeng Tu. 2023. GPT4Video: A Unified Multimodal Large Language Model for lnstruction-Followed Understanding and Safety-Aware Generation. (2023). arXiv:cs.CV/2311.16511
 
 [9] Antoine Yang, Arsha Nagrani, Paul Hongsuck Seo, Antoine Miech, Jordi Pont-
 Tuset, Ivan Laptev, Josef Sivic, and Cordelia Schmid. 2023. Vid2Seq: Large-Scale
