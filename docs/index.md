@@ -66,7 +66,7 @@ Our group started by developing software for downloading Youtube videos along wi
 
 Youtube returns a list of captions that all have different lengths, so we decided to concatenate adjacent closed captions to produce clips that are at least 30 seconds long.
 
-The dataset is being generated from a full playlist of the 2018 Classic Tetris World Championship. Out of the videos we are generating data for the first 11 that contain closed captions. This corresponds to roughly  524 minutes of video and just over 900 training samples.
+The dataset is being generated from a full playlist of the 2018 Classic Tetris World Championship [[7]](#references). Out of the videos we are generating data for the first 11 that contain closed captions. This corresponds to roughly  524 minutes of video and just over 900 training samples.
 
 ### 3.2 Video to Commentary Pipeline
 <figure>
@@ -90,7 +90,7 @@ Figure 3 shows our updated commentary system. It consists of 6 major steps:
 2. Use block and text identifiers to extact critical information (See Figure 4)
 3. Create a tabular prompt for a LLM
 4. Generate textual commentary using LLM (In this case Chat GPT)
-5. Pass textual commentary to a Text to Speech Model (Google Text-to-Speech) to generate audio
+5. Pass textual commentary to a Text to Speech Model (Google Text-to-Speech [[12]](#references)) to generate audio
 6. Combine the generated audio with the original clip to produce a commentated video
 
 <figure>
@@ -215,3 +215,5 @@ arXiv:cs.CV/2111.15162
 [11] Rowan Zellers, Ximing Lu, Jack Hessel, Youngjae Yu, Jae Sung Park, Jize Cao, Ali
 Farhadi, and Yejin Choi. 2021. MERLOT: Multimodal Neural Script Knowledge
 Models. (2021). arXiv:cs.CV/2106.02636
+
+[12] Pier Paolo Ippolito. 2024. gTTS (Google Text-to-Speech) v2.5.1. (2024). https://pypi.org/project/gTTS/
